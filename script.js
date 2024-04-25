@@ -8,17 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
     
   
-  // // 각 카드를 클릭할 때 실행될 함수
-  // function cardClicked(event) {
-  //     const card = event.currentTarget;
-  //     const movieId = card.dataset.movieId;
-  //     alert(`영화 ID: ${movieId}`);
-  //     }
+//   // 각 카드를 클릭할 때 실행될 함수
+//   function cardClicked(event) {
+//       const card = event.currentTarget;
+//       const movieId = card.dataset.movieId;
+//       alert(`영화 ID: ${movieId}`);
+//       }
   
-  //   // 모든 postCard 요소를 선택하고 클릭 이벤트를 추가
-  // document.querySelectorAll('.postCard').forEach(item => {
-  //     item.addEventListener('click', cardClicked);
-  // });
+//     // 모든 postCard 요소를 선택하고 클릭 이벤트를 추가
+//   document.querySelectorAll('.postCard').forEach(item => {
+//       item.addEventListener('click', cardClicked);
+//   });
   
   
   
