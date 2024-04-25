@@ -4,26 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBox = document.querySelector('#search-box'); // 검색창 input 요소
     const searchButton = document.querySelector('.btn'); // 검색 버튼 요소
     const cardsContainer = document.getElementById('cards'); // 영화 카드를 담는 요소
-  
-  
+    // const post = document.querySelector('.postCard') // 포스트카드
     
-  
-//   // 각 카드를 클릭할 때 실행될 함수
-//   function cardClicked(event) {
-//       const card = event.currentTarget;
-//       const movieId = card.dataset.movieId;
-//       alert(`영화 ID: ${movieId}`);
-//       }
-  
-//     // 모든 postCard 요소를 선택하고 클릭 이벤트를 추가
-//   document.querySelectorAll('.postCard').forEach(item => {
-//       item.addEventListener('click', cardClicked);
-//   });
-  
-  
-  
-  
-  
     // 검색 버튼에 클릭 이벤트 리스너 추가
     searchButton.addEventListener('click', function() {
         searchMovies();
@@ -89,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('에러 발생:', error));
     }
-  
+
     // 영화 카드를 화면에 표시하는 함수 // 위에서 받아온 const movies = response.results;
     function displayMovies(movies) {
         cardsContainer.innerHTML = ''; // 이전 카드 모두 제거
@@ -98,8 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let overview = movie.overview;
             let poster = movie.poster_path;
             let vote = movie.vote_average;
-         
-            const temp_html = ` <div class="col">
+            let id = movie.id;
+
+          console.log(movie) //확인용
+          
+            const temp_html = ` <div class="movieCard" onclick="alert('영화 ID: ${id}')" >
                <div class="card h-100">
                  <img src="https://image.tmdb.org/t/p/w500${poster}" class="card-img-top" alt="...">
                  <div class="card-body">
@@ -111,12 +96,12 @@ document.addEventListener('DOMContentLoaded', function() {
                  </div>
                </div>
              </div>`
-
+            
             cardsContainer.insertAdjacentHTML('beforeend', temp_html);
         });
         
     }
-  
+
     showAllCards();
   });
   
