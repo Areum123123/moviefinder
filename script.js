@@ -28,7 +28,7 @@ window.searchPost = () => {
     if (searchJs === '') {
         alert('검색어를 입력해주세요!');
         searchBox.focus();
-        return;
+        return;  //검색어가없으면
     }
     //검색어를 입력하면 실행
     const options = {
@@ -39,12 +39,14 @@ window.searchPost = () => {
         }
     };
 
+    
     //검색포스터도 한국어 &language=ko 추가
     fetch(`https://api.themoviedb.org/3/search/movie?query=${searchJs}&language=ko&api_key=e1ff2939922ab17f2d319ee664f0d7cb`, options)
         .then(response => response.json())
         .then(response => {
+            // console.log(response)
             if (response.results.length > 0) {
-                displayMovies(response.results); //이함수가실행되면서 검색결과가 넘어갑니다.
+                displayMovies(response.results); // 검색어와 영화제목이 일치하는부분이 있다면 displayMovies호출 일치데이터와함께
             } else {
                 alert('검색 결과가 없습니다.');
                 return;
@@ -110,3 +112,6 @@ function displayMovies(searchData) {
 
 
 
+//문제 : 없는영화제목 검색후 엔터를 누르면  검색결과가없습니다 두번뜬다. 클릭은괜찮은데.. 엔터..에서 문제?문제
+ //   const searchData = response.results;
+  //   const movieData = searchData.find(searchD => searchD.original_title.toLowerCase().includes(searchJs.toLowerCase()));
