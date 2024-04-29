@@ -66,7 +66,6 @@ function apifetch() {
         }
     };
    
-    // https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1 영어
     
     fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko', options)
         .then(response => response.json())
@@ -113,5 +112,6 @@ function displayMovies(searchData) {
 
 
 //문제 : 없는영화제목 검색후 엔터를 누르면  검색결과가없습니다 두번뜬다. 클릭은괜찮은데.. 엔터..에서 문제?문제
- //   const searchData = response.results;
-  //   const movieData = searchData.find(searchD => searchD.original_title.toLowerCase().includes(searchJs.toLowerCase()));
+//   const searchData = response.results;
+//   const movieData = searchData.find(searchD => searchD.original_title.toLowerCase().includes(searchJs.toLowerCase()));
+// https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1 영어
