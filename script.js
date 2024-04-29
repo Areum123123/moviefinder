@@ -66,7 +66,7 @@ function apifetch() {
         }
     };
    
-    // https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1 교체한국어
+    // https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1 영어
     
     fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko', options)
         .then(response => response.json())
