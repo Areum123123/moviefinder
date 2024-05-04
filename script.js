@@ -21,8 +21,9 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+// window.searchPost = () => {
 
-window.searchPost = () => {
+ const searchPost = async() => {
     // cardsContainer.empty(); //카드리스트 엠티
     let searchJs = searchBox.value.trim(); //input박스에적은 값 가지고와
     if (searchJs === '') {
@@ -38,26 +39,25 @@ window.searchPost = () => {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMWZmMjkzOTkyMmFiMTdmMmQzMTllZTY2NGYwZDdjYiIsInN1YiI6IjY2MjhjNjg2NGE0YmY2MDE2NTc3MDljNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.YzDRvR6hari6z5TKLJ9CFrkyXeQmfVitNrk4i0duFPY'
         }
     };
-
-    
-    //검색포스터도 한국어 &language=ko 추가
-    fetch(`https://api.themoviedb.org/3/search/movie?query=${searchJs}&language=ko&api_key=e1ff2939922ab17f2d319ee664f0d7cb`, options)
-        .then(response => response.json())
-        .then(response => {
-            // console.log(response)
-            if (response.results.length > 0) {
-                displayMovies(response.results); // 검색어와 영화제목이 일치하는부분이 있다면 displayMovies호출 일치데이터와함께
-            } else {
-                alert('검색 결과가 없습니다.');
-                return;
+    try {
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchJs}&language=ko&api_key=e1ff2939922ab17f2d319ee664f0d7cb`, options)
+    const json = await response.json();
+     if(json.results.length >0){
+                    displayMovies(json.results); // 검색어와 영화제목이 일치하는부분이 있다면 displayMovies호출 일치데이터와함께
+                } else {
+                    alert('검색 결과가 없습니다.');
+                    return;
+                }
+            } catch (error) {
+                console.error('Error during fetch:', error);
+                alert('검색 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
             }
-        })
-        .catch(error => console.error('에러 발생:', error));
-}
-
+        };
+ 
 // 전체 영화 정보 넘김
 
-function apifetch() {
+ async function apifetch() {
+   
     const options = {
         method: 'GET',
         headers: {
@@ -66,13 +66,18 @@ function apifetch() {
         }
     };
    
-    
-    fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko', options)
-        .then(response => response.json())
-        .then(response => {
-            displayMovies(response.results);
-        })
-        .catch(err => console.error(err));
+
+    //async await 으로 수정중 
+    try{
+        const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko', options)
+        const json = await response.json()
+      displayMovies(json.results);
+
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
+      
+  
 }
 
 
@@ -83,15 +88,23 @@ function displayMovies(searchData) {
 
     // let result = response['results'];
     searchData.forEach(searchData => {
-        let title = searchData.original_title;
-        let overview = searchData.overview;
-        let poster = searchData.poster_path;
-        let vote = searchData.vote_average;
-        let id = searchData.id
+
+        // let title = searchData.original_title;
+        // let overview = searchData.overview;
+        // let poster = searchData.poster_path;
+        // let vote = searchData.vote_average;
+        // let id = searchData.id
+      
+        const{
+            original_title : title,
+            overview,
+            poster_path : poster,
+            vote_average : vote,
+            id,
+        } = searchData
 
 
-
-        const temp_html = ` <div class="movieCard" onclick="alert('영화 ID: ${id}')" >
+        const temp = ` <div class="movieCard" onclick="alert('영화 ID: ${id}')" >
              <div class="card h-100">
                <img src="https://image.tmdb.org/t/p/w500${poster}" class="card-img-top" alt="...">
                <div class="card-body">
@@ -104,10 +117,13 @@ function displayMovies(searchData) {
              </div>
            </div>`
 
-        cardsContainer.insertAdjacentHTML('beforeend', temp_html);
+        cardsContainer.insertAdjacentHTML('beforeend', temp);
 
     });
 };
+
+
+
 
 
 
@@ -115,3 +131,31 @@ function displayMovies(searchData) {
 //   const searchData = response.results;
 //   const movieData = searchData.find(searchD => searchD.original_title.toLowerCase().includes(searchJs.toLowerCase()));
 // https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1 영어
+
+
+
+       //async await 으로 수정 위코드
+    //검색포스터도 한국어 &language=ko 추가
+    // fetch(`https://api.themoviedb.org/3/search/movie?query=${searchJs}&language=ko&api_key=e1ff2939922ab17f2d319ee664f0d7cb`, options)
+    //     .then(response => response.json())
+    //     .then(response => {
+    //         // console.log(response)
+    //         if (response.results.length > 0) {
+    //             displayMovies(response.results); // 검색어와 영화제목이 일치하는부분이 있다면 displayMovies호출 일치데이터와함께
+    //         } else {
+    //             alert('검색 결과가 없습니다.');
+    //             return;
+    //         }
+    //     })
+    //     .catch(error => console.error('에러 발생:', error));
+// }
+
+
+
+   
+    // fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko', options)
+    //     .then(response => response.json())
+    //     .then(response => {
+    //         displayMovies(response.results);
+    //     })
+    //     .catch(err => console.error(err));
